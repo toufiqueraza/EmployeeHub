@@ -1,0 +1,115 @@
+{% extends "employees/base.html" %}
+
+{% block title %}Dashboard | EmployeeHub{% endblock %}
+
+{% block content %}
+
+<div class="mb-4">
+    <h2 class="fw-bold mb-1">Dashboard</h2>
+    <p class="text-muted">
+        Overview of your employee management system.
+    </p>
+</div>
+
+<div class="row g-4 mb-4">
+
+    <div class="col-md-6 col-xl-4">
+        <div class="card border-0 shadow-sm h-100">
+            <div class="card-body">
+                <p class="text-muted mb-2">Total Employees</p>
+                <h2 class="fw-bold mb-0">
+                    {{ employee_count }}
+                </h2>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-6 col-xl-4">
+        <div class="card border-0 shadow-sm h-100">
+            <div class="card-body">
+                <p class="text-muted mb-2">Departments</p>
+                <h2 class="fw-bold mb-0">
+                    {{ department_count }}
+                </h2>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-6 col-xl-4">
+        <div class="card border-0 shadow-sm h-100">
+            <div class="card-body">
+                <p class="text-muted mb-2">System</p>
+                <h2 class="fw-bold mb-0">Active</h2>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<div class="card border-0 shadow-sm">
+
+    <div class="card-body">
+
+        <div class="d-flex justify-content-between align-items-center mb-3">
+
+            <div>
+                <h5 class="fw-bold mb-1">Recently Added</h5>
+                <p class="text-muted small mb-0">
+                    Latest employees added to the system.
+                </p>
+            </div>
+
+            <a
+                href="{% url 'employees:employee_list' %}"
+                class="btn btn-outline-primary btn-sm"
+            >
+                View All
+            </a>
+
+        </div>
+
+        <div class="list-group list-group-flush">
+
+            {% for employee in recent_employees %}
+
+                <a
+                    href="{% url 'employees:employee_detail' employee.pk %}"
+                    class="list-group-item list-group-item-action px-0"
+                >
+                    <div class="d-flex justify-content-between">
+
+                        <div>
+                            <strong>
+                                {{ employee.first_name }}
+                                {{ employee.last_name }}
+                            </strong>
+
+                            <div class="text-muted small">
+                                {{ employee.designation }}
+                                ·
+                                {{ employee.department.name }}
+                            </div>
+                        </div>
+
+                        <span class="text-muted small">
+                            {{ employee.created_at|date:"M d, Y" }}
+                        </span>
+
+                    </div>
+                </a>
+
+            {% empty %}
+
+                <p class="text-muted mb-0">
+                    No employees have been added yet.
+                </p>
+
+            {% endfor %}
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

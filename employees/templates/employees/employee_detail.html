@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ employee.first_name }} {{ employee.last_name }}</title>
+</head>
+<body>
+
+    <h1>{{ employee.first_name }} {{ employee.last_name }}</h1>
+
+    {% if employee.photo %}
+        <img
+            src="{{ employee.photo.url }}"
+            alt="{{ employee.first_name }}"
+            width="150"
+        >
+    {% endif %}
+
+    <p><strong>Email:</strong> {{ employee.email }}</p>
+    <p><strong>Phone:</strong> {{ employee.phone }}</p>
+    <p><strong>Designation:</strong> {{ employee.designation }}</p>
+    <p><strong>Department:</strong> {{ employee.department.name }}</p>
+    <p><strong>Date Joined:</strong> {{ employee.date_joined }}</p>
+
+    <hr>
+
+    <a href="{% url 'employees:employee_update' employee.pk %}">
+        Edit Employee
+    </a>
+
+    <a href="{% url 'employees:employee_delete' employee.pk %}">
+        Delete Employee
+    </a>
+
+    <a href="{% url 'employees:employee_list' %}">
+        Back to Employees
+    </a>
+
+</body>
+</html>
