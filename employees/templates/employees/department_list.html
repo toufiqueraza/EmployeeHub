@@ -5,98 +5,101 @@
 {% block content %}
 
 <div class="d-flex justify-content-between align-items-center mb-4">
-
     <div>
-        <h2 class="fw-bold mb-1">Departments</h2>
+        <h2>Departments</h2>
         <p class="text-muted mb-0">
             Manage company departments.
         </p>
     </div>
 
-    <a
-        href="{% url 'employees:department_create' %}"
-        class="btn btn-primary"
-    >
-        + Add Department
-    </a>
-
+    {% if perms.employees.add_department %}
+        <a href="{% url 'employees:department_create' %}"
+           class="btn btn-primary">
+            + Add Department
+        </a>
+    {% endif %}
 </div>
 
-<div class="card border-0 shadow-sm">
+<div class="card shadow-sm">
+    <div class="table-responsive">
 
-    <div class="card-body">
+        <table class="table table-hover align-middle mb-0">
 
-        <div class="table-responsive">
+            <thead class="table-light">
+                <tr>
+                    <th>Department</th>
+                    <th>Description</th>
+                    <th>Employees</th>
+                    <th class="text-end">Actions</th>
+                </tr>
+            </thead>
 
-            <table class="table align-middle">
-
-                <thead>
-                    <tr>
-                        <th>Department</th>
-                        <th>Description</th>
-                        <th>Employees</th>
-                        <th class="text-end">Actions</th>
-                    </tr>
-                </thead>
-
-                <tbody>
+            <tbody>
 
                 {% for department in departments %}
+                <tr>
 
-                    <tr>
+                    <td>
+                        <strong>{{ department.name }}</strong>
+                    </td>
 
-                        <td>
-                            <strong>{{ department.name }}</strong>
-                        </td>
+                    <td>
+                        {{ department.description|default:"—" }}
+                    </td>
 
-                        <td class="text-muted">
-                            {{ department.description|default:"—" }}
-                        </td>
+                    <td>
+                        <span class="badge bg-secondary">
+                            {{ department.employee_count }}
+                        </span>
+                    </td>
 
-                        <td>
-                            <span class="badge text-bg-light">
-                                {{ department.employee_count }}
-                            </span>
-                        </td>
+                    <td class="text-end">
 
-                        <td class="text-end">
-
+                        {% if perms.employees.change_department %}
                             <a
                                 href="{% url 'employees:department_update' department.pk %}"
                                 class="btn btn-sm btn-outline-primary"
                             >
                                 Edit
                             </a>
+                        {% endif %}
 
-                            <a
-                                href="{% url 'employees:department_delete' department.pk %}"
-                                class="btn btn-sm btn-outline-danger"
+                        {% if perms.employees.delete_department %}
+                            <form
+                                method="post"
+                                action="{% url 'employees:department_delete' department.pk %}"
+                                class="d-inline"
+                                onsubmit="return confirm('Delete this department?');"
                             >
-                                Delete
-                            </a>
+                                {% csrf_token %}
 
-                        </td>
+                                <button
+                                    type="submit"
+                                    class="btn btn-sm btn-outline-danger"
+                                >
+                                    Delete
+                                </button>
+                            </form>
+                        {% endif %}
 
-                    </tr>
+                    </td>
+
+                </tr>
 
                 {% empty %}
-
-                    <tr>
-                        <td colspan="4" class="text-center py-5">
-                            No departments found.
-                        </td>
-                    </tr>
-
+                <tr>
+                    <td colspan="4"
+                        class="text-center py-5 text-muted">
+                        No departments found.
+                    </td>
+                </tr>
                 {% endfor %}
 
-                </tbody>
+            </tbody>
 
-            </table>
-
-        </div>
+        </table>
 
     </div>
-
 </div>
 
 {% endblock %}
