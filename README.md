@@ -23,7 +23,7 @@ A role-based Employee Management System built with Django.
 ## User Roles
 
 | Role | Access |
-|------|--------|
+|---|---|
 | Admin | Full employee, department and user management |
 | HR | View, add and edit employees/departments |
 | Employee | View employee information |
@@ -51,19 +51,3 @@ pip install -r requirements.txt
 python manage.py migrate
 python manage.py createsuperuser
 python manage.py runserver
-```
-
-
-## Screenshots
-
-### Dashboard
-![Dashboard](screenshots/dashboard.png)
-
-### Employee Management
-![Employee Management](screenshots/employees.png)
-
-### Department Management
-![Department Management](screenshots/departments.png)
-
-### User Management & RBAC
-![User Management](screenshots/user-management.png)
