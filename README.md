@@ -52,3 +52,17 @@ python manage.py migrate
 python manage.py createsuperuser
 python manage.py runserver
 
+
+## Screenshots
+
+### Dashboard
+![Dashboard](screenshots/dashboard.png)
+
+### Employee Management
+![Employee Management](screenshots/employees.png)
+
+### Department Management
+![Department Management](screenshots/departments.png)
+
+### User Management & RBAC
+![User Management](screenshots/user-management.png)
