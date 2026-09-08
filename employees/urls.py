@@ -37,4 +37,22 @@ urlpatterns = [
     # User management
     path("users/", user_views.user_list, name="user_list"),
     path("users/add/", user_views.user_create, name="user_create"),
+
+    path(
+        "users/<int:pk>/edit/",
+        user_views.user_update,
+        name="user_update",
+    ),
+
+    path(
+        "users/<int:pk>/toggle/",
+        user_views.user_toggle_status,
+        name="user_toggle_status",
+    ),
+
+    path(
+        "users/<int:pk>/delete/",
+        user_views.user_delete,
+        name="user_delete",
+    ),
 ]
